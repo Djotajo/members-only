@@ -5,6 +5,7 @@ const path = require("node:path");
 const http = require("http");
 const db = require("./db/queries");
 const { neon } = require("@neondatabase/serverless");
+const bcrypt = require("bcryptjs");
 const sql = neon(process.env.DATABASE_URL);
 const assetsPath = path.join(__dirname, "public");
 const PORT = process.env.PORT || 3000;
@@ -21,6 +22,7 @@ app.use(express.static(assetsPath));
 
 app.use("/", indexRouter);
 app.use("/signup", signupRouter);
+app.get("/welcome", (req, res) => res.render("welcome"));
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}`);
