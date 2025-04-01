@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
+    <%- include("partials/errors.ejs") %>
     <form method="POST" action="/signup" class="new-member-form">
       <label for="firstName">First Name</label>
       <input
@@ -14,6 +15,7 @@
         name="firstName"
         id="firstName"
         placeholder="First name"
+        required
       />
       <label for="lastName">Last Name</label>
       <input
@@ -21,6 +23,7 @@
         name="lastName"
         id="lastName"
         placeholder="Last name"
+        required
       />
       <label for="username">Username</label>
       <input type="text" name="username" id="username" placeholder="Username" />
@@ -31,6 +34,7 @@
         name="password"
         id="password"
         placeholder="password"
+        required
       />
 
       <label for="confirmPassword">Confirm Password</label>
@@ -39,6 +43,7 @@
         name="confirmPassword"
         id="confirmPassword"
         placeholder="Confirm password"
+        required
       />
 
       <button type="submit">Submit</button>
