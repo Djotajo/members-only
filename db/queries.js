@@ -34,10 +34,16 @@ async function getAllMessages() {
   return messages;
 }
 
+async function getAllMessagesAndAuthors() {
+  const messages = sql`SELECT messages.title, messages.text, messages.created_at, members.username AS author FROM messages INNER JOIN members ON messages.author = members.id;`;
+  return messages;
+}
+
 module.exports = {
   postNewMember,
   getUser,
   getUserById,
   getAllMembers,
   getAllMessages,
+  getAllMessagesAndAuthors,
 };

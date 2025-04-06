@@ -10,7 +10,7 @@
     <main>
       <% if (locals.user) {%>
       <h1>WELCOME BACK <%= user.username %></h1>
-      <a href="/log-out">LOG OUT</a>
+      <a href="/logout">LOG OUT</a>
       <% } else { %>
       <h1>please log in</h1>
       <form action="/login" method="POST">
@@ -27,6 +27,14 @@
       </form>
       <%}%>
       <a href="/signup">Sign Up</a>
+
+      <% messages.forEach(message => { %>
+      <p><%=message.title %></p>
+      <p><%=message.text %></p>
+      <p><%=message.created_at %></p>
+      <% if (locals.user) {%>
+      <p><%=message.author %></p>
+      <%}%> <%})%>
     </main>
   </body>
 </html>

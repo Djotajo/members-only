@@ -11,10 +11,20 @@ async function getAllMembers(req, res) {
   return member;
 }
 
-indexRouter.get("/", (req, res) => {
+indexRouter.get("/", async (req, res) => {
   const members = getAllMembers();
+  const messages = await db.getAllMessagesAndAuthors();
 
-  res.render("index", { user: req.user });
+  res.render("index", { user: req.user, messages: messages });
+});
+
+indexRouter.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 });
 
 module.exports = indexRouter;
