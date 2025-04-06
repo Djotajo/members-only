@@ -12,6 +12,16 @@ async function postNewMember(firstName, lastName, username, hashedPassword) {
   return;
 }
 
+async function getUser(username) {
+  const user = await sql`SELECT * FROM members WHERE username = ${username}`;
+  return user;
+}
+
+async function getUserById(id) {
+  const user = await sql`SELECT * FROM members WHERE username = ${id}`;
+  return user;
+}
+
 async function getAllMembers() {
   const members =
     await sql`SELECT members.username, members.first_name FROM members`;
@@ -26,6 +36,8 @@ async function getAllMessages() {
 
 module.exports = {
   postNewMember,
+  getUser,
+  getUserById,
   getAllMembers,
   getAllMessages,
 };

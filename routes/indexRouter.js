@@ -14,7 +14,7 @@ async function getAllMembers(req, res) {
 indexRouter.get("/", (req, res) => {
   const members = getAllMembers();
 
-  res.render("index");
+  res.render("index", { user: req.user });
 });
 
 module.exports = indexRouter;
