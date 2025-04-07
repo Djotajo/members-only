@@ -24,9 +24,8 @@ const { body, validationResult } = require("express-validator");
 
 const alphaErr = "must only contain letters.";
 const lengthErr = "must be between 1 and 10 characters.";
-const emailErr = "must be a valid email address.";
-const ageErr = "must be between 18 and 120.";
-const bioErr = "must be max 200 characters";
+const passErr =
+  "must be at least 8 characters long and include 1 lowercase letter, 1 uppercase letter, 1 number, and 1 symbol.";
 
 const validateUser = [
   body("firstName")
@@ -41,17 +40,27 @@ const validateUser = [
     .withMessage(`Last name ${alphaErr}`)
     .isLength({ min: 1, max: 10 })
     .withMessage(`Last name ${lengthErr}`),
-  body("email").trim().isEmail().withMessage(`Email address ${emailErr}`),
-  body("age")
-    .optional({ values: "falsy" })
+  body("username")
     .trim()
-    .isInt({ min: 18, max: 120 })
-    .withMessage(`Age ${ageErr}`),
-  body("bio")
-    .optional({ values: "falsy" })
-    .trim()
-    .isLength({ max: 200 })
-    .withMessage(`Bio ${bioErr}`),
+    .isAlpha()
+    .withMessage(`Last name ${alphaErr}`)
+    .isLength({ min: 1, max: 10 })
+    .withMessage(`Last name ${lengthErr}`),
+  body("password")
+    .isStrongPassword({
+      minLength: 3,
+      //   minLowercase: 1,
+      //   minUppercase: 1,
+      //   minNumbers: 1,
+      //   minSymbols: 1,
+    })
+    .withMessage(`Password ${passErr}`),
+  body("confirmPassword").custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error("Passwords do not match");
+    }
+    return true;
+  }),
 ];
 
 exports.newUserCreate = [
@@ -69,17 +78,23 @@ exports.newUserCreate = [
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      const result = await db.postNewMember(
-        firstName,
-        lastName,
-        username,
-        hashedPassword
-      );
-      console.log(result);
-      return result.success;
+      await db.postNewMember(firstName, lastName, username, hashedPassword);
+
+      //   const result = await db.postNewMember(
+      //     firstName,
+      //     lastName,
+      //     username,
+      //     hashedPassword
+      //   );
+      //   console.log(result);
+      //   return result.success;
+      return res.redirect("/welcome");
     } catch (error) {
       console.error("Error creating user:", error);
-      return false;
+      return res.status(500).render("form", {
+        title: "Create user",
+        errors: [{ msg: "Something went wrong. Please try again." }],
+      });
     }
   },
 ];

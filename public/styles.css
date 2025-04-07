@@ -8,8 +8,8 @@
   width: 500px;
   align-items: center;
   align-content: center;
-  margin: 100px auto 0 auto;
-  gap: 5em;
+  /* margin: 100px auto 0 auto; */
+  gap: 1em;
 }
 
 .message {
@@ -35,4 +35,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+form {
+  margin: 1em;
 }

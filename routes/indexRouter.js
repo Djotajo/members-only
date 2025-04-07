@@ -13,7 +13,6 @@ async function getAllMembers(req, res) {
 indexRouter.get("/", async (req, res) => {
   const members = getAllMembers();
   const messages = await db.getAllMessagesAndAuthors();
-  //   console.log(req.user);
   res.render("index", { user: req.user, messages: messages });
 });
 
