@@ -18,7 +18,7 @@ async function getUser(username) {
 }
 
 async function getUserById(id) {
-  const user = await sql`SELECT * FROM members WHERE username = ${id}`;
+  const user = await sql`SELECT * FROM members WHERE id = ${id}`;
   return user;
 }
 

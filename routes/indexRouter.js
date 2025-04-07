@@ -6,7 +6,6 @@ const db = require("../db/queries");
 
 async function getAllMembers(req, res) {
   const members = await db.getAllMembers();
-  console.log(members);
   const member = members[0];
   return member;
 }
@@ -14,7 +13,7 @@ async function getAllMembers(req, res) {
 indexRouter.get("/", async (req, res) => {
   const members = getAllMembers();
   const messages = await db.getAllMessagesAndAuthors();
-
+  //   console.log(req.user);
   res.render("index", { user: req.user, messages: messages });
 });
 
