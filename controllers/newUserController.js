@@ -2,26 +2,6 @@ const db = require("../db/queries");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
 
-// async function newUserCreate(req, res) {
-//   try {
-//     const { firstName, lastName, username, password } = req.body;
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-
-//     const result = await db.postNewMember(
-//       firstName,
-//       lastName,
-//       username,
-//       hashedPassword
-//     );
-//     console.log(result);
-//     return result.success;
-//   } catch (error) {
-//     console.error("Error creating user:", error);
-//     return false;
-//   }
-// }
-
 const alphaErr = "must only contain letters.";
 const lengthErr = "must be between 1 and 10 characters.";
 const passErr =
@@ -49,10 +29,10 @@ const validateUser = [
   body("password")
     .isStrongPassword({
       minLength: 3,
-      //   minLowercase: 1,
-      //   minUppercase: 1,
-      //   minNumbers: 1,
-      //   minSymbols: 1,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1,
     })
     .withMessage(`Password ${passErr}`),
   body("confirmPassword").custom((value, { req }) => {
@@ -79,15 +59,6 @@ exports.newUserCreate = [
       const hashedPassword = await bcrypt.hash(password, 10);
 
       await db.postNewMember(firstName, lastName, username, hashedPassword);
-
-      //   const result = await db.postNewMember(
-      //     firstName,
-      //     lastName,
-      //     username,
-      //     hashedPassword
-      //   );
-      //   console.log(result);
-      //   return result.success;
       return res.redirect("/welcome");
     } catch (error) {
       console.error("Error creating user:", error);
@@ -98,10 +69,3 @@ exports.newUserCreate = [
     }
   },
 ];
-
-// module.exports = {
-//   newUserCreate,
-// };
-// module.exports = {
-//   newUserCreate,
-// };

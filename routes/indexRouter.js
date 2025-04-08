@@ -4,6 +4,8 @@ const indexRouter = Router();
 
 const db = require("../db/queries");
 
+const newMessageController = require("../controllers/newMessageController");
+
 async function getAllMembers(req, res) {
   const members = await db.getAllMembers();
   const member = members[0];
@@ -24,5 +26,7 @@ indexRouter.get("/logout", (req, res, next) => {
     res.redirect("/");
   });
 });
+
+indexRouter.post("/message", newMessageController.newMessageCreate);
 
 module.exports = indexRouter;

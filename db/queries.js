@@ -39,6 +39,12 @@ async function getAllMessagesAndAuthors() {
   return messages;
 }
 
+async function postNewMessage(title, text, authorID) {
+  console.log(`${title}, ${text}, ${authorID}`);
+  await sql`INSERT INTO messages(title, text, author) VALUES (${title}, ${text}, ${authorID})`;
+  return;
+}
+
 module.exports = {
   postNewMember,
   getUser,
@@ -46,4 +52,5 @@ module.exports = {
   getAllMembers,
   getAllMessages,
   getAllMessagesAndAuthors,
+  postNewMessage,
 };
