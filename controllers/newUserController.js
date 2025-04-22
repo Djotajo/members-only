@@ -43,6 +43,43 @@ const validateUser = [
   }),
 ];
 
+const validateMember = [
+  body("secretCode").custom((value, { req }) => {
+    if (value !== "Djotajo") {
+      throw new Error("Wrong secret Code");
+    }
+    return true;
+  }),
+];
+
+exports.newMemberValidate = [
+  validateMember,
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("member", {
+        title: "Become a member",
+        errors: errors.array(),
+      });
+    }
+    try {
+      const currentUser = res.locals.currentUser;
+      const username = currentUser.username;
+      console.log("test");
+      console.log(currentUser);
+
+      await db.setMemberStatus(username);
+      return res.redirect("/welcome");
+    } catch (error) {
+      console.error("Error validating member:", error);
+      return res.status(500).render("member", {
+        title: "Become a member",
+        errors: [{ msg: "Something went wrong. Please try again." }],
+      });
+    }
+  },
+];
+
 exports.newUserCreate = [
   validateUser,
   async (req, res) => {

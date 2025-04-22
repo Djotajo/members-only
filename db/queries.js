@@ -12,6 +12,16 @@ async function postNewMember(firstName, lastName, username, hashedPassword) {
   return;
 }
 
+async function setMemberStatus(username) {
+  try {
+    await sql`UPDATE members SET member_status = true WHERE username = ${username};`;
+    return { success: true };
+  } catch (error) {
+    console.error("Database error:", error);
+    return { success: false, error };
+  }
+}
+
 async function getUser(username) {
   const user = await sql`SELECT * FROM members WHERE username = ${username}`;
   return user;
@@ -50,6 +60,7 @@ module.exports = {
   getUser,
   getUserById,
   getAllMembers,
+  setMemberStatus,
   getAllMessages,
   getAllMessagesAndAuthors,
   postNewMessage,

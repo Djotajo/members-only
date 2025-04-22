@@ -27,6 +27,8 @@
         <button type="submit">Post</button>
       </form>
       <br />
+      <a href="/member">Join the secret members club</a>
+      <br />
       <a href="/logout">LOG OUT</a>
       <% } else { %>
       <h1>Please log in stranger. This is a members only zone.</h1>
@@ -51,9 +53,9 @@
           <p class="messageTitle"><%=message.title %></p>
           <p class="messageText"><%=message.text %></p>
           <p class="messageTime"><%=message.created_at %></p>
-          <% if (locals.user) {%>
+          <% if (locals.user) {%> <% if (locals.user.member_status) {%>
           <p class="messageAuthor"><%=message.author %></p>
-          <%}%>
+          <%}%> <%}%>
         </div>
         <%})%>
       </div>
