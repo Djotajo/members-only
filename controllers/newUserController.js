@@ -46,14 +46,14 @@ const validateUser = [
 const validateMember = [
   body("secretCode").custom((value, { req }) => {
     if (value !== "Djotajo") {
-      throw new Error("Wrong secret Code");
+      throw new Error("Wrong secret Code (Hint: It has 7 letters)");
     }
     return true;
   }),
 ];
 
 exports.newMemberValidate = [
-  validateMember,
+  ...validateMember,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

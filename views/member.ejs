@@ -14,8 +14,12 @@
         src="https://img.freepik.com/free-photo/silhouette-man-looking-new-york-city-buildings_23-2150820160.jpg?t=st=1745342685~exp=1745346285~hmac=837323ef8b68c665765a144ef57d36a1930378f4f504a6ab20c8a76a390e32bf&w=360"
         alt="Nice, now check the footer and say my name"
       />
-      <h3>Check the ctrl + ___ + del</h3>
+      <h3>Try ctrl + ___ + del</h3>
       <h4>Enter the secret code</h4>
+
+      <% if (errors && errors.length > 0) { %> <% errors.forEach(error => { %>
+      <p><%= error.msg %></p>
+      <% }) %> <% } %>
 
       <form action="/membership" method="POST">
         <label for="secretCode">Super secret code</label>
@@ -29,5 +33,6 @@
       </form>
     </main>
     <a href="../">I want to go home</a>
+    <%- include('partials/footer') %>
   </body>
 </html>

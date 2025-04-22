@@ -26,8 +26,10 @@
         />
         <button type="submit">Post</button>
       </form>
+      <% if (!locals.user.member_status) {%>
       <br />
       <a href="/member">Join the secret members club</a>
+      <%}%>
       <br />
       <a href="/logout">LOG OUT</a>
       <% } else { %>
@@ -60,5 +62,6 @@
         <%})%>
       </div>
     </main>
+    <%- include('partials/footer') %>
   </body>
 </html>

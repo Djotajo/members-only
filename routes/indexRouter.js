@@ -31,17 +31,8 @@ indexRouter.get("/logout", (req, res, next) => {
 
 indexRouter.post("/membership", newUserController.newMemberValidate);
 
-// indexRouter.post("/membership", async (req, res) => {
-//   let currentUser = res.locals.currentUser;
-//   console.log(req.body.secretCode);
-//   console.log(currentUser);
-//   const messages = await db.getAllMessagesAndAuthors();
-//   await db.setMemberStatus(res.locals.currentUser);
-//   res.render("welcome");
-// });
-
 indexRouter.get("/member", async (req, res) => {
-  res.render("member");
+  res.render("member", { title: "Become a member", errors: [] });
 });
 
 indexRouter.post("/message", newMessageController.newMessageCreate);
