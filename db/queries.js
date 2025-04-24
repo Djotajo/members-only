@@ -1,8 +1,14 @@
 const sql = require("./sql");
 
-async function postNewMember(firstName, lastName, username, hashedPassword) {
+async function postNewMember(
+  firstName,
+  lastName,
+  username,
+  hashedPassword,
+  isAdmin
+) {
   try {
-    await sql`INSERT INTO members(first_name, last_name, username, password_hashed, member_status) VALUES (${firstName}, ${lastName}, ${username}, ${hashedPassword}, 'No');`;
+    await sql`INSERT INTO members(first_name, last_name, username, password_hashed, member_status, admin) VALUES (${firstName}, ${lastName}, ${username}, ${hashedPassword}, 'No', ${isAdmin});`;
     return { success: true };
   } catch (error) {
     console.error("Database error:", error);
@@ -40,18 +46,23 @@ async function getAllMembers() {
 
 async function getAllMessages() {
   const messages =
-    await sql`SELECT messages.title, messages.text FROM messages`;
+    await sql`SELECT messages.title, messages.text, messages.id FROM messages`;
   return messages;
 }
 
 async function getAllMessagesAndAuthors() {
-  const messages = sql`SELECT messages.title, messages.text, messages.created_at, members.username AS author FROM messages INNER JOIN members ON messages.author = members.id;`;
+  const messages = sql`SELECT messages.title, messages.text, messages.id, messages.created_at, members.username AS author FROM messages INNER JOIN members ON messages.author = members.id;`;
   return messages;
 }
 
 async function postNewMessage(title, text, authorID) {
   console.log(`${title}, ${text}, ${authorID}`);
   await sql`INSERT INTO messages(title, text, author) VALUES (${title}, ${text}, ${authorID})`;
+  return;
+}
+
+async function postDeleteMessage(id) {
+  await sql`DELETE FROM messages WHERE id = ${id}`;
   return;
 }
 
@@ -64,4 +75,5 @@ module.exports = {
   getAllMessages,
   getAllMessagesAndAuthors,
   postNewMessage,
+  postDeleteMessage,
 };

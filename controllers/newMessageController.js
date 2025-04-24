@@ -9,17 +9,20 @@ async function newMessageCreate(req, res) {
     console.error("Error creating message:", error);
     res.status(500).send("Error creating message");
   }
-
-  //   const item = await db.getItemByModel(model);
-  //   res.render("layout", {
-  //     title: model,
-  //     content: "item",
-  //     item: item,
-  //     baseUrl: req.originalUrl,
-  //     back: "/items",
-  //   });
+}
+async function deleteMessageById(req, res) {
+  try {
+    const { id } = req.params;
+    const query = Number(id);
+    await db.postDeleteMessage(query);
+    res.redirect("/");
+  } catch (error) {
+    console.error("Error deleting message:", error);
+    res.status(500).send("Error deleting message");
+  }
 }
 
 module.exports = {
   newMessageCreate,
+  deleteMessageById,
 };

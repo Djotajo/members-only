@@ -37,4 +37,6 @@ indexRouter.get("/member", async (req, res) => {
 
 indexRouter.post("/message", newMessageController.newMessageCreate);
 
+indexRouter.post("/message/:id", newMessageController.deleteMessageById);
+
 module.exports = indexRouter;

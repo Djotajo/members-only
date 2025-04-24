@@ -9,6 +9,11 @@
   <body>
     <main>
       <h1>Welcome</h1>
+      <% if (locals.currentUser) {%>
+      <p class="messageAuthor">
+        and congratulations on becoming fresh blood.. I mean a member
+      </p>
+      <%}%>
       <a href="../">Go home</a>
     </main>
 

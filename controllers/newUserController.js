@@ -92,10 +92,17 @@ exports.newUserCreate = [
     }
     try {
       const { firstName, lastName, username, password } = req.body;
+      const isAdmin = req.body.isAdmin === "on";
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      await db.postNewMember(firstName, lastName, username, hashedPassword);
+      await db.postNewMember(
+        firstName,
+        lastName,
+        username,
+        hashedPassword,
+        isAdmin
+      );
       return res.redirect("/welcome");
     } catch (error) {
       console.error("Error creating user:", error);

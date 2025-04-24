@@ -57,7 +57,17 @@
           <p class="messageTime"><%=message.created_at %></p>
           <% if (locals.user) {%> <% if (locals.user.member_status) {%>
           <p class="messageAuthor"><%=message.author %></p>
-          <%}%> <%}%>
+          <%}%> <%}%> <% if (locals.user) {%> <% if (locals.user.admin) {%>
+          <form
+            action="/message/<%= message.id %>"
+            method="POST"
+            style="display: inline"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit">Delete</button>
+          </form>
+          <p class="messageId"><%=message.id %></p>
+          <%}%><%}%>
         </div>
         <%})%>
       </div>
