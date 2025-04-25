@@ -65,8 +65,6 @@ exports.newMemberValidate = [
     try {
       const currentUser = res.locals.currentUser;
       const username = currentUser.username;
-      console.log("test");
-      console.log(currentUser);
 
       await db.setMemberStatus(username);
       return res.redirect("/welcome");

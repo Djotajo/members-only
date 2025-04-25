@@ -9,13 +9,14 @@
   <body>
     <main>
       <% if (locals.user) {%>
-      <h1>WELCOME BACK <%= user.username %></h1>
+      <h1>Welcome back <%= user.username %>!</h1>
       <br />
-      <form action="/message" method="POST">
+      <form action="/message" method="POST" class="messageForm">
         <label for="title">Title</label>
         <input id="title" name="title" placeholder="Title" type="text" />
         <label for="text">Text</label>
-        <input id="text" name="text" placeholder="Text" type="text" />
+        <!-- <input id="text" name="text" placeholder="Text" type="text" /> -->
+        <textarea name="text" id="text" rows="10"></textarea>
         <label for="authorID"></label>
         <input
           id="authorID"
@@ -54,9 +55,13 @@
         <div class="message">
           <p class="messageTitle"><%=message.title %></p>
           <p class="messageText"><%=message.text %></p>
-          <p class="messageTime"><%=message.created_at %></p>
-          <% if (locals.user) {%> <% if (locals.user.member_status) {%>
-          <p class="messageAuthor"><%=message.author %></p>
+
+          <% if (locals.user) {%> <% if (locals.user.member_status ||
+          locals.user.admin) {%>
+          <p class="messageTime">
+            Sent on: <%=new Date(message.created_at).toLocaleString('en-GB') %>
+          </p>
+          <p class="messageAuthor">Message sent by: <%=message.author %></p>
           <%}%> <%}%> <% if (locals.user) {%> <% if (locals.user.admin) {%>
           <form
             action="/message/<%= message.id %>"
@@ -66,7 +71,6 @@
             <input type="hidden" name="_method" value="DELETE" />
             <button type="submit">Delete</button>
           </form>
-          <p class="messageId"><%=message.id %></p>
           <%}%><%}%>
         </div>
         <%})%>

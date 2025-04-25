@@ -14,8 +14,6 @@ async function postNewMember(
     console.error("Database error:", error);
     return { success: false, error };
   }
-
-  return;
 }
 
 async function setMemberStatus(username) {
@@ -56,7 +54,6 @@ async function getAllMessagesAndAuthors() {
 }
 
 async function postNewMessage(title, text, authorID) {
-  console.log(`${title}, ${text}, ${authorID}`);
   await sql`INSERT INTO messages(title, text, author) VALUES (${title}, ${text}, ${authorID})`;
   return;
 }
